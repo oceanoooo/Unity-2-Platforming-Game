@@ -19,8 +19,12 @@ public class playerManager : MonoBehaviour
     public GameObject winMenu;
     public GameObject loseMenu;
 
+    private List<collectables> inventory = new List<collectables>();
+    public Text InventoryText
+    public Text DiscrptonText
+    public ScoreText
     // Start is called before the first frame update
-    void Start()
+    void Start()    
     {
         // Makes sure game is "unpaused"
         isGamePaused = false;
@@ -47,6 +51,46 @@ public class playerManager : MonoBehaviour
         {
             LoseGame();
         }
+         if (inventory.Count == 0)
+        {
+            inventoryText.text = "Current Selection: None";
+            descriptionText.text = "";
+        }
+        else
+        {
+            inventoryText.text = "Current Selection: " + 
+            inventory[currentIndex].collectableName + " " + currentIndex.ToString();
+
+            descriptionText.text = "Press [E] to " + inventory[currentIndex].description;
+        }
+          if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (inventory.Count > 0)
+            {
+                inventory[currentIndex].Use();
+                inventory.RemoveAt(currentIndex);
+                currentIndex = (currentIndex - 1) % inventory.Count;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            if (inventory.Count > 0)
+            {
+                currentIndex = (currentIndex + 1) % inventory.Count;
+            }
+        }
+            private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Collectable>() != null)
+        {
+            collision.GetComponent<Collectable>().player = this.gameObject;
+            collision.gameObject.transform.parent = null;
+            inventory.Add(collision.GetComponent<Collectable>());
+            collision.gameObject.SetActive(false);
+        }
+    }
+
     }
 
    void FindAllMenus()
@@ -114,6 +158,7 @@ public class playerManager : MonoBehaviour
     public void ChangeScore(int value)
     {
         score += value;
+        
     }
 
 }
