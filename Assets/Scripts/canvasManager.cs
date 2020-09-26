@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class canvasManager : MonoBehaviour
 {
+    
+    public GameObject FadePanel;
+    
+    private void Start()  
+        
+        Fadepanel.Setactivate(false);   
     public void QuitGame()
     {
         Application.Quit();
@@ -12,11 +18,16 @@ public class canvasManager : MonoBehaviour
 
     public void ResetLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void NextLevel()
     {
-        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex+1)%SceneManager.sceneCountInBuildSettings);
+        //SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex+1)%SceneManager.sceneCountInBuildSettings);
     }
 }
+    Fadepanel.Setactivate(true)
+    for (int i = 0; i < 100; i++)
+
+
+SceneManager.LoadScene(SeceneToLoad);
